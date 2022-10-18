@@ -9,6 +9,10 @@ import {
   AiFillYoutube,
 } from "react-icons/ai";
 import jWithBG from "../public/jWithBG.jpg";
+import jNoBG from "../public/jNoBG.png";
+import Alltta from "../public/Alltta.jpg";
+import TBK from "../public/TBK.png";
+import Procussions from "../public/Procussions.jpg";
 
 export default function Home() {
   return (
@@ -52,6 +56,33 @@ export default function Home() {
           <div className="relative mx-auto bg-gradient-to-t from-white to-black rounded-full  mt-20">
             <Image className="rounded-full w-200 h-200 " src={jWithBG} />
           </div>
+        </section>
+
+        <section>
+          <div>
+            <h3 className="text-3xl py-1">Works</h3>
+          </div>
+          <div>
+            <div className="text-center shadow-lg p-10 rounded-xl my-10">
+              <Image src={Alltta} width={100} height={100} className="" />
+              <h3>ALLTTA</h3>
+            </div>
+          </div>
+          <div>
+            <div className="text-center shadow-lg p-10 rounded-xl my-10">
+              <Image src={TBK} width={100} height={100} />
+              <h3>ALLTTA</h3>
+            </div>
+          </div>
+          <div>
+            <div className="text-center shadow-lg p-10 rounded-xl my-10">
+              <Image src={Procussions} width={100} height={100} />
+              <h3>ALLTTA</h3>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h3>Section for live shows</h3>
         </section>
       </main>
     </div>
