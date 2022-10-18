@@ -13,12 +13,30 @@ import jNoBG from "../public/jNoBG.png";
 import Alltta from "../public/Alltta.jpg";
 import TBK from "../public/TBK.png";
 import Procussions from "../public/Procussions.jpg";
+import React, { useState, useEffect } from "react";
 
-export default function Home() {
+const YOUTUBE_PLAYLIST_ITEMS_API =
+  "https://www.googleapis.com/youtube/v3/playlists";
+
+export async function getServerSideProps() {
+  const res = await fetch(
+    `${YOUTUBE_PLAYLIST_ITEMS_API}?key=${process.env.YOUTUBE_API_KEY}`
+  );
+  const data = await res.json();
+  return {
+    props: {
+      data,
+    },
+  };
+}
+
+export default function Home({ data }) {
+  console.log(data);
   return (
     <div className={styles.container}>
       <Head>
         <title>Mr J</title>
+
         <meta name="description" content="Seth Medeiros" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
