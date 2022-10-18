@@ -16,12 +16,14 @@ import Procussions from "../public/Procussions.jpg";
 import React, { useState, useEffect } from "react";
 
 const YOUTUBE_PLAYLIST_ITEMS_API =
-  "https://www.googleapis.com/youtube/v3/playlists";
+  "https://www.googleapis.com/youtube/v3/playlistItems";
 
 export async function getServerSideProps() {
+  //Alltta
   const res = await fetch(
-    `${YOUTUBE_PLAYLIST_ITEMS_API}?key=${process.env.YOUTUBE_API_KEY}`
+    `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&playlistId=PLF3lu5b2iqGUIbDk3k-z3AWL2HUc2hsTP&maxResults=30&key=${process.env.YOUTUBE_API_KEY}`
   );
+
   const data = await res.json();
   return {
     props: {
@@ -30,8 +32,23 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Home({ data }) {
+export async function getServerSidePropsTwo() {
+  //The Procussions
+  const res = await fetch(
+    `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&playlistId=PLXDcgC-3o4rokijUgx_dF_zhxEkghssT5&maxResults=6&key=${process.env.YOUTUBE_API_KEY}`
+  );
+
+  const dataOne = await res.json();
+  return {
+    props: {
+      dataOne,
+    },
+  };
+}
+
+export default function Home({ data, dataOne }) {
   console.log(data);
+  console.log("THE PROCUSSIONS : ", dataOne);
   return (
     <div className={styles.container}>
       <Head>
@@ -52,7 +69,7 @@ export default function Home({ data }) {
               <li>
                 <a
                   className="bg-gradient-to-r from-black to-black text-white px-4 py-2 rounded-md ml-8"
-                  href="#"
+                  href="https://genius.com/search?q=Mrj%20Medeiross"
                 >
                   Rap Genius
                 </a>
@@ -67,9 +84,15 @@ export default function Home({ data }) {
             </p>
           </div>
           <div className="text-5xl flex justify-center gap-16 py-3 text-grey-600">
-            <AiFillTwitterCircle />
-            <AiFillInstagram />
-            <AiFillYoutube />
+            <a href="https://twitter.com/mrjmedeiros?lang=en">
+              <AiFillTwitterCircle />
+            </a>
+            <a href="https://www.instagram.com/mrjmedeiros/">
+              <AiFillInstagram />
+            </a>
+            <a href="https://www.youtube.com/c/mrjmedeiros">
+              <AiFillYoutube />
+            </a>
           </div>
           <div className="relative mx-auto bg-gradient-to-t from-white to-black rounded-full  mt-20">
             <Image className="rounded-full w-200 h-200 " src={jWithBG} />
@@ -82,8 +105,26 @@ export default function Home({ data }) {
           </div>
           <div>
             <div className="text-center shadow-lg p-10 rounded-xl my-10">
-              <Image src={Alltta} width={100} height={100} className="" />
-              <h3>ALLTTA</h3>
+              <Image src={Alltta} width={100} height={100} />
+              <ui className="grid list-none grid-rows-2 text-center flex items-center">
+                {data.items.map((item) => {
+                  const { id, snippet = {} } = item;
+                  const { title, thumbnails = {} } = snippet;
+                  const { medium = {} } = thumbnails;
+                  return (
+                    <li key={id} className="card">
+                      <p>
+                        <img
+                          width={medium.width}
+                          height={medium.height}
+                          src={medium.url}
+                        />
+                      </p>
+                      <h3>{title}</h3>
+                    </li>
+                  );
+                })}
+              </ui>
             </div>
           </div>
           <div>
