@@ -1,8 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
 import { BsFillMoonStarsFill } from "react-icons/bs";
-import { BiStoreAlt } from "react-icons/bi";
+import { SiBandcamp } from "react-icons/si";
 import {
   AiFillTwitterCircle,
   AiFillInstagram,
@@ -10,43 +9,50 @@ import {
   AiFillYoutube,
 } from "react-icons/ai";
 import jWithBG from "../public/jWithBG.jpg";
-import jNoBG from "../public/jNoBG.png";
 import Alltta from "../public/Alltta.jpg";
 import TBK from "../public/TBK.png";
 import Procussions from "../public/Procussions.jpg";
-import mainPhoto from "../public/mainPhoto.jpg";
 import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 const YOUTUBE_PLAYLIST_ITEMS_API =
   "https://www.googleapis.com/youtube/v3/playlistItems";
 
 export async function getServerSideProps() {
-  //Alltta
-  const [allttaRes, procussionsRes] = await Promise.all([
+  //Alltta, Procussions, MrJ
+  const [allttaRes, procussionsRes, mrJRes] = await Promise.all([
     fetch(
-      `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&playlistId=PLF3lu5b2iqGUIbDk3k-z3AWL2HUc2hsTP&maxResults=30&key=${process.env.YOUTUBE_API_KEY}`
+      `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&playlistId=PLF3lu5b2iqGUIbDk3k-z3AWL2HUc2hsTP&maxResults=6&key=${process.env.YOUTUBE_API_KEY}`
     ),
     fetch(
       `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&playlistId=PLXDcgC-3o4rokijUgx_dF_zhxEkghssT5&maxResults=6&key=${process.env.YOUTUBE_API_KEY}`
     ),
+    fetch(
+      `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&playlistId=PLM8h5dDGeAwlBBsEwZYwhujjZA-jARGAE&maxResults=6&key=${process.env.YOUTUBE_API_KEY}`
+    ),
   ]);
-  const [alltta, procussions] = await Promise.all([
+  const [alltta, procussions, mrJ] = await Promise.all([
     allttaRes.json(),
     procussionsRes.json(),
+    mrJRes.json(),
   ]);
   return {
     props: {
       alltta,
       procussions,
+      mrJ,
     },
   };
 }
 
-export default function Home({ alltta, procussions }) {
+export default function Home({ alltta, procussions, mrJ }) {
   const [darkMode, setDarkMode] = useState(false);
 
   console.log(alltta);
   console.log("THE PROCUSSIONS : ", procussions);
+  console.log("MR J : ", mrJ);
+  console.log("HELLO");
   return (
     <div className={darkMode ? "dark" : ""}>
       <Head>
@@ -94,6 +100,9 @@ export default function Home({ alltta, procussions }) {
             <a href="https://www.youtube.com/c/mrjmedeiros">
               <AiFillYoutube />
             </a>
+            <a href="https://mrjmedeiros.com/">
+              <SiBandcamp />
+            </a>
           </div>
           <div className="flex justify-center">
             <Image className="rounded-full w-200 h-200 " src={jWithBG} />
@@ -105,39 +114,46 @@ export default function Home({ alltta, procussions }) {
           </div>
           <div>
             <div className="text-center shadow-lg p-10 rounded-xl my-10">
-              <Image src={Alltta} width={100} height={100} />
-              <ui>
+              <Swiper slidesPerView={1}>
+                <SwiperSlide>
+                  <Image src={Alltta} width={215} height={215} />
+                </SwiperSlide>
                 {alltta.items.map((item) => {
                   const { id, snippet = {} } = item;
                   const { title, thumbnails = {} } = snippet;
                   const { medium = {} } = thumbnails;
                   return (
-                    <li key={id} className="card flex flex-col justify-center">
-                      <p>
+                    <SwiperSlide
+                      key={id}
+                      className="card flex flex-col justify-center"
+                    >
+                      <p className="">
                         <img
+                          alt=""
                           width={medium.width}
                           height={medium.height}
                           src={medium.url}
                         />
                       </p>
                       <h3>{title}</h3>
-                    </li>
+                    </SwiperSlide>
                   );
                 })}
-              </ui>
+              </Swiper>
             </div>
           </div>
           <div>
             <div className="text-center shadow-lg p-10 rounded-xl my-10">
-              <Image src={Procussions} width={100} height={100} />
-
-              <ui className="grid list-none grid-rows-2 text-center flex items-center">
+              <Swiper slidesPerView={1}>
+                <SwiperSlide>
+                  <Image src={Procussions} width={215} height={215} />
+                </SwiperSlide>
                 {procussions.items.map((item) => {
                   const { id, snippet = {} } = item;
                   const { title, thumbnails = {} } = snippet;
                   const { medium = {} } = thumbnails;
                   return (
-                    <li key={id} className="card">
+                    <SwiperSlide key={id} className="card">
                       <p>
                         <img
                           width={medium.width}
@@ -146,16 +162,35 @@ export default function Home({ alltta, procussions }) {
                         />
                       </p>
                       <h3>{title}</h3>
-                    </li>
+                    </SwiperSlide>
                   );
                 })}
-              </ui>
+              </Swiper>
             </div>
           </div>
-          <div>
-            <div className="text-center shadow-lg p-10 rounded-xl my-10">
-              <h3>ALLTTA</h3>
-            </div>
+          <div className="text-center shadow-lg p-10 rounded-xl my-10">
+            <Swiper slidesPerView={1}>
+              <SwiperSlide>
+                <div>MR J MEDEIROS</div>
+              </SwiperSlide>
+              {mrJ.items.map((item) => {
+                const { id, snippet = {} } = item;
+                const { title, thumbnails = {} } = snippet;
+                const { medium = {} } = thumbnails;
+                return (
+                  <SwiperSlide key={id} className="card">
+                    <p>
+                      <img
+                        width={medium.width}
+                        height={medium.height}
+                        src={medium.url}
+                      />
+                    </p>
+                    <h3>{title}</h3>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
           </div>
         </section>
         <section></section>
@@ -163,47 +198,3 @@ export default function Home({ alltta, procussions }) {
     </div>
   );
 }
-
-// <div id="carouselExampleControls" class="carousel slide relative" data-bs-ride="carousel">
-//   <div class="carousel-inner relative w-full overflow-hidden">
-//     <div class="carousel-item active relative float-left w-full">
-//       <img
-//         src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp"
-//         class="block w-full"
-//         alt="Wild Landscape"
-//       />
-//     </div>
-//     <div class="carousel-item relative float-left w-full">
-//       <img
-//         src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp"
-//         class="block w-full"
-//         alt="Camera"
-//       />
-//     </div>
-//     <div class="carousel-item relative float-left w-full">
-//       <img
-//         src="https://mdbcdn.b-cdn.net/img/new/slides/043.webp"
-//         class="block w-full"
-//         alt="Exotic Fruits"
-//       />
-//     </div>
-//   </div>
-//   <button
-//     class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
-//     type="button"
-//     data-bs-target="#carouselExampleControls"
-//     data-bs-slide="prev"
-//   >
-//     <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-//     <span class="visually-hidden">Previous</span>
-//   </button>
-//   <button
-//     class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
-//     type="button"
-//     data-bs-target="#carouselExampleControls"
-//     data-bs-slide="next"
-//   >
-//     <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
-//     <span class="visually-hidden">Next</span>
-//   </button>
-// </div>
