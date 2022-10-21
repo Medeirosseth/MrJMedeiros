@@ -78,7 +78,7 @@ export default function Home({ alltta, procussions, mrJ }) {
                   className="bg-gradient-to-r from-yellow to-black text-black px-4 py-2 rounded-md ml-8"
                   href="https://genius.com/search?q=Mrj%20Medeiross"
                 >
-                  Rap Genius
+                  Genius
                 </a>
               </li>
             </ul>
@@ -92,16 +92,16 @@ export default function Home({ alltta, procussions, mrJ }) {
           </div>
           <div className="text-5xl flex justify-center gap-16 py-3 text-grey-600">
             <a href="https://twitter.com/mrjmedeiros?lang=en">
-              <AiFillTwitterCircle />
+              <AiFillTwitterCircle className="text-4xl" />
             </a>
             <a href="https://www.instagram.com/mrjmedeiros/">
-              <AiFillInstagram />
+              <AiFillInstagram className="text-4xl" />
             </a>
             <a href="https://www.youtube.com/c/mrjmedeiros">
-              <AiFillYoutube />
+              <AiFillYoutube className="text-4xl" />
             </a>
             <a href="https://mrjmedeiros.com/">
-              <SiBandcamp />
+              <SiBandcamp className="text-4xl" />
             </a>
           </div>
           <div className="flex justify-center">
@@ -109,9 +109,6 @@ export default function Home({ alltta, procussions, mrJ }) {
           </div>
         </section>
         <section>
-          <div className="flex justify-center">
-            <h3 className="text-3xl py-1">Works</h3>
-          </div>
           <div>
             <div className="text-center shadow-lg p-10 rounded-xl my-10">
               <Swiper slidesPerView={1}>
@@ -127,7 +124,7 @@ export default function Home({ alltta, procussions, mrJ }) {
                       key={id}
                       className="card flex flex-col justify-center"
                     >
-                      <p className="">
+                      <p className="flex self-center">
                         <img
                           alt=""
                           width={medium.width}
@@ -135,7 +132,7 @@ export default function Home({ alltta, procussions, mrJ }) {
                           src={medium.url}
                         />
                       </p>
-                      <h3>{title}</h3>
+                      <h3 className="flex self-center">{title}</h3>
                     </SwiperSlide>
                   );
                 })}
@@ -154,14 +151,14 @@ export default function Home({ alltta, procussions, mrJ }) {
                   const { medium = {} } = thumbnails;
                   return (
                     <SwiperSlide key={id} className="card">
-                      <p>
+                      <p className="flex justify-center">
                         <img
                           width={medium.width}
                           height={medium.height}
                           src={medium.url}
                         />
                       </p>
-                      <h3>{title}</h3>
+                      <h3 className="flex justify-center">{title}</h3>
                     </SwiperSlide>
                   );
                 })}
@@ -179,14 +176,14 @@ export default function Home({ alltta, procussions, mrJ }) {
                 const { medium = {} } = thumbnails;
                 return (
                   <SwiperSlide key={id} className="card">
-                    <p>
+                    <p className="flex self-center justify-center">
                       <img
                         width={medium.width}
                         height={medium.height}
                         src={medium.url}
                       />
                     </p>
-                    <h3>{title}</h3>
+                    <h3 className="flex justify-center">{title}</h3>
                   </SwiperSlide>
                 );
               })}
