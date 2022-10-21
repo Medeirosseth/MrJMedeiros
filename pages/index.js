@@ -117,20 +117,26 @@ export default function Home({ alltta, procussions, mrJ }) {
                 </SwiperSlide>
                 {alltta.items.map((item) => {
                   const { id, snippet = {} } = item;
-                  const { title, thumbnails = {} } = snippet;
+                  const { title, thumbnails, resourceID = {} } = snippet;
+                  const { videoId = {} } = resourceID;
                   const { medium = {} } = thumbnails;
+                  // const youTube = "https://www.youtube.com/watch?v=";
+                  const videoSrc = `https://www.youtube.com/embed/${videoId}`;
                   return (
                     <SwiperSlide
                       key={id}
                       className="card flex flex-col justify-center"
                     >
                       <p className="flex self-center">
-                        <img
-                          alt=""
-                          width={medium.width}
-                          height={medium.height}
-                          src={medium.url}
-                        />
+                        <object data={videoSrc} width="300" height="200">
+                          <embed
+                            title="video player"
+                            alt=""
+                            width={medium.width}
+                            height={medium.height}
+                            src={videoSrc}
+                          />
+                        </object>
                       </p>
                       <h3 className="flex self-center">{title}</h3>
                     </SwiperSlide>
@@ -147,16 +153,16 @@ export default function Home({ alltta, procussions, mrJ }) {
                 </SwiperSlide>
                 {procussions.items.map((item) => {
                   const { id, snippet = {} } = item;
-                  const { title, thumbnails = {} } = snippet;
+                  const { title, thumbnails, resourceID = {} } = snippet;
+                  const { videoId = {} } = resourceID;
                   const { medium = {} } = thumbnails;
+                  const videoSrc = `https://www.youtube.com/embed/${videoId}`;
                   return (
                     <SwiperSlide key={id} className="card">
                       <p className="flex justify-center">
-                        <img
-                          width={medium.width}
-                          height={medium.height}
-                          src={medium.url}
-                        />
+                        <object data={videoSrc} width="300" height="200">
+                          <embed src={videoSrc} />
+                        </object>
                       </p>
                       <h3 className="flex justify-center">{title}</h3>
                     </SwiperSlide>
@@ -172,16 +178,16 @@ export default function Home({ alltta, procussions, mrJ }) {
               </SwiperSlide>
               {mrJ.items.map((item) => {
                 const { id, snippet = {} } = item;
-                const { title, thumbnails = {} } = snippet;
+                const { title, thumbnails, resourceID = {} } = snippet;
+                const { videoId = {} } = resourceID;
                 const { medium = {} } = thumbnails;
+                const videoSrc = `https://www.youtube.com/embed/${videoId}`;
                 return (
                   <SwiperSlide key={id} className="card">
                     <p className="flex self-center justify-center">
-                      <img
-                        width={medium.width}
-                        height={medium.height}
-                        src={medium.url}
-                      />
+                      <object data={videoSrc} width="300" height="200">
+                        <embed src={videoSrc} />
+                      </object>
                     </p>
                     <h3 className="flex justify-center">{title}</h3>
                   </SwiperSlide>
