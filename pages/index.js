@@ -14,7 +14,10 @@ import TBK from "../public/TBK.png";
 import Procussions from "../public/Procussions.jpg";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { mainPhoto } from "../public/mainPhoto.jpg";
 import "swiper/css";
+
+//// return back to iframe or images to remove _ERR_BLOCKED_BY_CLIENT ERRORS
 
 const YOUTUBE_PLAYLIST_ITEMS_API =
   "https://www.googleapis.com/youtube/v3/playlistItems";
@@ -86,9 +89,6 @@ export default function Home({ alltta, procussions, mrJ }) {
           <div className="text-center p-10">
             <h2 className="text-5xl py-2 font-medium">Mr. J Medeiros</h2>
             <h3 className="text-2xl py-2">Producer | Rapper</h3>
-            <p className="text-md py-5 leading-8 text-grey-800">
-              Blurb about jason
-            </p>
           </div>
           <div className="text-5xl flex justify-center gap-16 py-3 text-grey-600">
             <a href="https://twitter.com/mrjmedeiros?lang=en">
@@ -104,7 +104,7 @@ export default function Home({ alltta, procussions, mrJ }) {
               <SiBandcamp className="text-4xl" />
             </a>
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center pt-10">
             <Image className="rounded-full w-200 h-200 " src={jWithBG} />
           </div>
         </section>
@@ -113,7 +113,14 @@ export default function Home({ alltta, procussions, mrJ }) {
             <div className="text-center shadow-lg p-10 rounded-xl my-10">
               <Swiper slidesPerView={1}>
                 <SwiperSlide>
-                  <Image src={Alltta} width={215} height={215} />
+                  <div id="container-div-alltta">
+                    <Image src={Alltta} width={215} height={215} />
+                    <img
+                      id="hand"
+                      className="fade-out"
+                      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/409445/kts_demo_hand.svg"
+                    />
+                  </div>
                 </SwiperSlide>
                 {alltta.items.map((item) => {
                   const { id, snippet = {} } = item;
@@ -129,13 +136,7 @@ export default function Home({ alltta, procussions, mrJ }) {
                     >
                       <p className="flex self-center">
                         <object data={videoSrc} width="300" height="200">
-                          <embed
-                            title="video player"
-                            alt=""
-                            width={medium.width}
-                            height={medium.height}
-                            src={videoSrc}
-                          />
+                          <iframe title="video player" src={videoSrc} />
                         </object>
                       </p>
                       <h3 className="flex self-center">{title}</h3>
@@ -174,7 +175,7 @@ export default function Home({ alltta, procussions, mrJ }) {
           <div className="text-center shadow-lg p-10 rounded-xl my-10">
             <Swiper slidesPerView={1}>
               <SwiperSlide>
-                <div>MR J MEDEIROS</div>
+                <Image alt="" src={mainPhoto} width={215} height={215} />
               </SwiperSlide>
               {mrJ.items.map((item) => {
                 const { id, snippet = {} } = item;
